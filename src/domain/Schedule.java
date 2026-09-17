@@ -78,7 +78,6 @@ public class Schedule extends AbstractEntity{
 	        this.items = new ArrayList<>();
 	    }
 	    this.items.addAll(items);
-		this.items = items;
 	}
 	
 	// 予定を削除するメソッド
