@@ -3,7 +3,7 @@ package usecase;
 import java.util.Scanner;
 
 
-//アプリケーションを起動しメインルーチンを実行するクラス
+//アプリケーションを起動しメインを実行するクラス
 public class Main  {
 		static Scanner scan = new Scanner(System.in);
 	
@@ -31,6 +31,7 @@ public class Main  {
 		System.out.println();
 	}
 	
+	//今日までにここを完成させる。
 	static void run() {
 		System.out.print("番号を入力してください > ");
 	
@@ -50,7 +51,8 @@ public class Main  {
 			
 		}
 		default: {
-			System.out.println("終了します");
+			//ここに例外処理を追加します
+			System.out.println("");
 		}
 	}
 	}
