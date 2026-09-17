@@ -5,7 +5,7 @@ public class PreparationItem extends AbstractEntity{
 	
 	private String name; //準備物の名前
 	private int quantity; //準備物の個数
-	private boolean isPrepared; //準備物の準備状態（true:準備済み、false:未準備）
+	private boolean isPrepared; //準備物の準備状態
 	
 	public PreparationItem(String name, int quantity, boolean isPrepared) {
 		super();
