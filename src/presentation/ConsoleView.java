@@ -1,4 +1,4 @@
-package usecase;
+package presentation;
 
 //コンソールからの入力受け取りや画面表示を担当するクラス
 public class ConsoleView {
