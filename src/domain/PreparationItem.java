@@ -47,7 +47,7 @@ public class PreparationItem extends AbstractEntity{
 		this.isPrepared = isPrepared;
 	}
 	
-	// 準備物の情報を表示用の文字列に変換するメソッド
+	// 表示用の文字に変換するメソッド
 	public String toDisplayString() {
 		return "準備物 [name=" + name + ", quantity=" + quantity + ", isPrepared=" + isPrepared + "]";
 	}

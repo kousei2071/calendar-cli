@@ -1,4 +1,4 @@
-package usecase;
+package presentation;
 
 import java.util.Scanner;
 
