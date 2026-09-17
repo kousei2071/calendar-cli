@@ -31,7 +31,6 @@ public class Main  {
 		System.out.println();
 	}
 	
-	//今日までにここを完成させる。
 	static void run() {
 		System.out.print("番号を入力してください > ");
 	
