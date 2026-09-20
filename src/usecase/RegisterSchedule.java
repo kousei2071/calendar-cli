@@ -21,10 +21,10 @@ public class RegisterSchedule {
     
     // パラメータを受け取り予定と準備物を登録する
     public void execute(String title, String description, LocalDateTime dateTime, List<PreparationItemDto> itemDtos) {
-        // 1. スケジュール用のIDを自動採番
+        //スケジュール用のIDを自動採番
         int scheduleId = idGenerator.generateId();
         
-        // 2. 準備物DTOのリストをドメインモデルのリストに変換しつつIDを採番）
+        //準備物DTOのリストをドメインモデルのリストに変換しつつIDを採番）
         List<PreparationItem> items = new ArrayList<>();
         if (itemDtos != null) {
             for (PreparationItemDto dto : itemDtos) {
