@@ -14,9 +14,10 @@ public class Schedule extends AbstractEntity{
 	private List<PreparationItem> items; //予定に紐づく準備物
 	
 	
-	public Schedule(String title, LocalDateTime dateTime, List<PreparationItem> items) {
+	public Schedule(int id,String title,String deString, LocalDateTime dateTime, List<PreparationItem> items) {
 		super();
 		this.title = title;
+		this.description = deString;
 		this.dateTime = dateTime;
 		this.items = items;
 		

@@ -7,13 +7,15 @@ public class PreparationItem extends AbstractEntity{
 	private int quantity; //準備物の個数
 	private boolean isPrepared; //準備物の準備状態
 	
-	public PreparationItem(String name, int quantity, boolean isPrepared) {
+	public PreparationItem(int id,String name, int quantity, boolean isPrepared) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
 		this.isPrepared = isPrepared;
 		
 	}
+
+
 
 	public String getName() {
 		return name;
