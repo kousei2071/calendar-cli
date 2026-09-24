@@ -36,25 +36,32 @@ public class Main {
             try {
                 switch (select) {
                     case 1:
+                    	// 予定登録
                         view.register(registerSchedule);
                         break;
                     case 2:
+                    	// 予定一覧表示
                         view.list(listSchedules);
                         break;
+                        //　予定検索
                     case 3:
                         view.search(findNextSchedule);
                         break;
+                        // 予定編集
                     case 4:
                         view.edit(listSchedules, editSchedule);
                         break;
+                        // 予定削除
                     case 5:
                         view.delete(listSchedules, deleteSchedule);
                         break;
+                        // アプリ終了
                     case 0:
                         System.out.println("アプリを終了します。お疲れ様でした！");
                         running = false;
                         break;
                     default:
+                    	// 例外
                         System.out.println("無効な選択肢です。0〜5の間で選択してください。\n");
                         break;
                 }
