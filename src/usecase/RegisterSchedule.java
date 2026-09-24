@@ -12,8 +12,7 @@ import repository.ScheduleRepository;
 // 新しい予定と準備物を登録する処理を行うクラス
 public class RegisterSchedule {
     private final ScheduleRepository repository;
-    private final IdGenerator idGenerator; // 変数名は小文字のcamelCaseが一般的です
-    
+    private final IdGenerator idGenerator; 
     public RegisterSchedule(ScheduleRepository repository, IdGenerator idGenerator) {
         this.repository = repository;
         this.idGenerator = idGenerator;
@@ -29,16 +28,17 @@ public class RegisterSchedule {
         if (itemDtos != null) {
             for (PreparationItemDto dto : itemDtos) {
                 int itemId = idGenerator.generateId();
+
                 // 例として、新規登録時は個数1、未準備(false)で作成する
                 items.add(new PreparationItem(itemId, dto.getName(), 1, false));
             }
    }
         
 
-     // 3. スケジュールエンティティの作成
+     // スケジュールエンティティの作成
     Schedule schedule = new Schedule(scheduleId, title, description, dateTime, items);
 
-        // 4. リポジトリに保存
+        // リポジトリに保存
         repository.save(schedule);
     }
 }
