@@ -2,59 +2,66 @@ package presentation;
 
 import java.util.Scanner;
 
+import repository.IdGenerator;
+import repository.ScheduleRepository;
+import usecase.DeleteSchedule;
+import usecase.EditSchedule;
+import usecase.FindNextSchedule;
+import usecase.ListSchedules;
+import usecase.RegisterSchedule;
 
-//アプリケーションを起動しメインを実行するクラス
-public class Main  {
-		static Scanner scan = new Scanner(System.in);
-	
-	public static void main(String[] args) {
-		
-		showTitle();
-		showMenu();
-		run();
-	}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ConsoleView view = new ConsoleView(scanner);
 
-	static void showTitle() {
-		System.out.println();
-		System.out.println("================================");
-		System.out.println("           じかんぷらす           ");
-		System.out.println("================================");
-		System.out.println();
-	}
-	
-	static void showMenu() {
-		System.out.println("[1] 予定の登録");
-		System.out.println("[2] 予定の一覧表示");
-		System.out.println("[3] 予定の編集");
-		System.out.println("[4] 予定の削除");
-		System.out.println("[0] 終了");
-		System.out.println();
-	}
-	
-	static void run() {
-		System.out.print("番号を入力してください > ");
-	
-		int select = scan.nextInt();
-		
-		switch(select) {
-		case 1: {
-			
-		}
-		case 2: {
-			
-		}
-		case 3: {
-			
-		}
-		case 4: {
-			
-		}
-		default: {
-			//ここに例外処理を追加します
-			System.out.println("");
-		}
-	}
-	}
+        ScheduleRepository repository = new ScheduleRepository();
+        IdGenerator idGenerator = new IdGenerator();
+        RegisterSchedule registerSchedule = new RegisterSchedule(repository, idGenerator);
+        ListSchedules listSchedules = new ListSchedules(repository);
+        FindNextSchedule findNextSchedule = new FindNextSchedule(repository);
+        EditSchedule editSchedule = new EditSchedule(repository);
+        DeleteSchedule deleteSchedule = new DeleteSchedule(repository);
+
+        view.title();
+
+        boolean running = true;
+
+        while (running) {
+            view.menu();
+            
+            System.out.print("番号を入力してください > ");
+            int select = Integer.parseInt(scanner.nextLine());
+
+            try {
+                switch (select) {
+                    case 1:
+                        view.register(registerSchedule);
+                        break;
+                    case 2:
+                        view.list(listSchedules);
+                        break;
+                    case 3:
+                        view.search(findNextSchedule);
+                        break;
+                    case 4:
+                        view.edit(listSchedules, editSchedule);
+                        break;
+                    case 5:
+                        view.delete(listSchedules, deleteSchedule);
+                        break;
+                    case 0:
+                        System.out.println("アプリを終了します。お疲れ様でした！");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("無効な選択肢です。0〜5の間で選択してください。\n");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("エラーが発生しました: " + e.getMessage() + "\n");
+            }
+        }
+        scanner.close();
+    }
 }
-
-
