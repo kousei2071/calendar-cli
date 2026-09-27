@@ -67,7 +67,7 @@ public class ConsoleView {
         System.out.print("持ち物を入力してください > ");
         String desc = scanner.nextLine();
 
-        System.out.print("日時を入力してください (例: 2026-9-30 9:30 または 2026930930) > ");
+        System.out.print("日時を入力してください > ");
         String input = scanner.nextLine();
         LocalDateTime dt = parseDateTime(input);
 
