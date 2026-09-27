@@ -2,6 +2,7 @@ package presentation;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,15 @@ import usecase.RegisterSchedule;
 
 public class ConsoleView {
     private final Scanner scanner;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    
+    // 複数の日時フォーマットに対応
+    private static final List<DateTimeFormatter> FORMATTERS = List.of(
+        DateTimeFormatter.ofPattern("yyyy-M-d H:m"),  
+        DateTimeFormatter.ofPattern("yyyyMMddHHmm")   
+    );
+    
+    // 表示用のフォーマッター（一覧表示時などはキレイにゼロ埋め表示）
+    private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public ConsoleView(Scanner scanner) {
         this.scanner = scanner;
@@ -23,7 +32,7 @@ public class ConsoleView {
 
     public void title() {
         System.out.println("\n================================");
-        System.out.println("           じかんぷらす           ");
+        System.out.println("            じかんぷらす            ");
         System.out.println("================================\n");
     }
 
@@ -36,6 +45,20 @@ public class ConsoleView {
         System.out.println("[0] 終了\n");
     }
 
+    // 複数のフォーマッターを順番に試してパースするヘルパーメソッド
+    private LocalDateTime parseDateTime(String input) {
+        String trimmedInput = input.trim();
+        for (DateTimeFormatter formatter : FORMATTERS) {
+            try {
+                return LocalDateTime.parse(trimmedInput, formatter);
+            } catch (DateTimeParseException e) {
+                // 次のフォーマットを試すため、ここでは例外を無視してループを継続
+            }
+        }
+        // すべてのフォーマットに一致しなかった場合は例外を投げる
+        throw new DateTimeParseException("日時の形式が正しくありません。", trimmedInput, 0);
+    }
+
     // 予定登録(1)の処理
     public void register(RegisterSchedule uc) {
         System.out.print("予定を入力してください > ");
@@ -44,8 +67,9 @@ public class ConsoleView {
         System.out.print("持ち物を入力してください > ");
         String desc = scanner.nextLine();
 
-        System.out.print("日時を入力してください (例: 2026-10-01 10:30) > ");
-        LocalDateTime dt = LocalDateTime.parse(scanner.nextLine(), FORMATTER);
+        System.out.print("日時を入力してください (例: 2026-9-30 9:30 または 2026930930) > ");
+        String input = scanner.nextLine();
+        LocalDateTime dt = parseDateTime(input);
 
         uc.execute(title, desc, dt, new ArrayList<>());
         System.out.println("予定を登録しました！\n");
@@ -60,7 +84,7 @@ public class ConsoleView {
         }
         System.out.println("--- 予定一覧 ---");
         for (Schedule s : list) {
-            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(FORMATTER) + ")");
+            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(DISPLAY_FORMATTER) + ")");
         }
         System.out.println();
     }
@@ -77,7 +101,7 @@ public class ConsoleView {
         }
         System.out.println("--- 直近の予定 ---");
         for (Schedule s : list) {
-            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(FORMATTER) + ")");
+            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(DISPLAY_FORMATTER) + ")");
         }
         System.out.println();
     }
@@ -92,7 +116,7 @@ public class ConsoleView {
 
         System.out.println("--- 現在の予定一覧 ---");
         for (Schedule s : list) {
-            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(FORMATTER) + ")");
+            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(DISPLAY_FORMATTER) + ")");
         }
         System.out.println();
 
@@ -103,8 +127,10 @@ public class ConsoleView {
         String title = scanner.nextLine();
         System.out.print("新しい持ち物を入力してください > ");
         String desc = scanner.nextLine();
-        System.out.print("新しい日時を入力してください (例: 2026-10-01 10:30) > ");
-        LocalDateTime dt = LocalDateTime.parse(scanner.nextLine(), FORMATTER);
+        
+        System.out.print("新しい日時を入力してください (例: 2026-9-30 9:30 または 2026930930) > ");
+        String input = scanner.nextLine();
+        LocalDateTime dt = parseDateTime(input);
 
         editUc.execute(id, title, desc, dt);
         System.out.println("予定を更新しました！\n");
@@ -120,7 +146,7 @@ public class ConsoleView {
 
         System.out.println("--- 現在の予定一覧 ---");
         for (Schedule s : list) {
-            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(FORMATTER) + ")");
+            System.out.println("[" + s.getId() + "] 予定: " + s.getTitle() + " [持ち物: " + s.getDescription() + "] (" + s.getDateTime().format(DISPLAY_FORMATTER) + ")");
         }
         System.out.println();
 

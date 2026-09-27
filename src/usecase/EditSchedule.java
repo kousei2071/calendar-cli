@@ -24,7 +24,7 @@ public class EditSchedule {
         //リポジトリから対象のスケジュールをIDで検索する
     	Optional<Schedule> optionalSchedule = repository.findById(id);
 
-    	// 2中身が空（存在しない）かどうかをチェックする
+    	// 中身が空かどうかをチェックする
     	if (optionalSchedule.isEmpty()) {
     	    throw new IllegalArgumentException("指定されたIDの予定が見つかりません ID: " + id);
     	}
@@ -35,7 +35,6 @@ public class EditSchedule {
     	schedule.setDescription(description);
     	schedule.setDateTime(dateTime);
 
-    	//リポジトリに保存する
     	repository.save(schedule);
     }
 }

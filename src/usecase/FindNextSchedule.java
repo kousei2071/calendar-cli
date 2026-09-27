@@ -36,11 +36,11 @@ public class FindNextSchedule {
                 futureSchedules.add(schedule);
             }
         }
-     //日時の昇順でソート（Comparatorを使用します）
+     //日時の昇順でソート
         futureSchedules.sort(Comparator.comparing(Schedule::getDateTime));   
         
         
-     //指定された件数（limit）までを新しいリストに詰める
+     //指定された件数までを新しいリストに詰める
         List<Schedule> result = new ArrayList<>();
         for (int i = 0; i < futureSchedules.size() && i < limit; i++) {
             result.add(futureSchedules.get(i));

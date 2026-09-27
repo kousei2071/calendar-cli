@@ -20,25 +20,22 @@ public class RegisterSchedule {
     
     // パラメータを受け取り予定と準備物を登録する
     public void execute(String title, String description, LocalDateTime dateTime, List<PreparationItemDto> itemDtos) {
-        //スケジュール用のIDを自動採番
+    
         int scheduleId = idGenerator.generateId();
         
-        //準備物DTOのリストをドメインモデルのリストに変換しつつIDを採番）
+        //準備物DTOのリストをドメインモデルのリストに変換
         List<PreparationItem> items = new ArrayList<>();
         if (itemDtos != null) {
             for (PreparationItemDto dto : itemDtos) {
                 int itemId = idGenerator.generateId();
-
-                // 例として、新規登録時は個数1、未準備(false)で作成する
+                
+                // 例として、新規登録時は個数1、未準備で作成する
                 items.add(new PreparationItem(itemId, dto.getName(), 1, false));
             }
    }
         
-
-     // スケジュールエンティティの作成
     Schedule schedule = new Schedule(scheduleId, title, description, dateTime, items);
 
-        // リポジトリに保存
         repository.save(schedule);
     }
 }
