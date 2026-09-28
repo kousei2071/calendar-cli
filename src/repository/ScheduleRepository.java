@@ -15,12 +15,21 @@ public class ScheduleRepository {
 	// 予定データを保持するリスト
 	private List<Schedule> schedules = new ArrayList<>();
 
-	// 予定を追加するメソッド
+	// 予定を追加または更新するメソッド（編集時の重複を防ぐため上書きに対応）
 	public void save(Schedule schedule) {
 		if (schedule == null) {
             throw new IllegalArgumentException("保存するスケジュールはnullにできません。");
         }
-		deleteById(schedule.getId());
+		
+		// すでに同じIDが存在する場合は置き換える（上書き更新）
+		for (int i = 0; i < schedules.size(); i++) {
+			if (schedules.get(i).getId() == schedule.getId()) {
+				schedules.set(i, schedule);
+				return;
+			}
+		}
+		
+		// 存在しない場合は新規追加
 		schedules.add(schedule);
 	}
 
@@ -38,7 +47,7 @@ public class ScheduleRepository {
 		return false;
 	}
 
-	// idで予定を検索するメソッド（
+	// idで予定を検索するメソッド
 	public Optional<Schedule> findById(int id) {
 		for (Schedule schedule : schedules) {
 			if (schedule.getId() == id) {

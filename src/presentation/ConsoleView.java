@@ -39,7 +39,7 @@ public class ConsoleView {
     public void menu() {
         System.out.println("[1] 予定の登録");
         System.out.println("[2] 予定の一覧表示");
-        System.out.println("[3] 直近の予定を検索");
+        System.out.println("[3] 直近の予定を表示");
         System.out.println("[4] 予定の編集");
         System.out.println("[5] 予定の削除");
         System.out.println("[0] 終了\n");
@@ -128,7 +128,7 @@ public class ConsoleView {
         System.out.print("新しい持ち物を入力してください > ");
         String desc = scanner.nextLine();
         
-        System.out.print("新しい日時を入力してください (例: 2026-9-30 9:30 または 2026930930) > ");
+        System.out.print("新しい日時を入力してください > ");
         String input = scanner.nextLine();
         LocalDateTime dt = parseDateTime(input);
 
